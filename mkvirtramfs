@@ -1,0 +1,33 @@
+#!/bin/bash
+
+rm -rf tmp
+mkdir tmp
+cp init tmp/init
+
+modules=
+add() { modules="$modules $@"; }
+add drivers/virtio/virtio_ring.ko
+add drivers/virtio/virtio.ko
+add drivers/virtio/virtio_pci.ko
+add fs/fscache/fscache.ko
+add net/9p/9pnet.ko
+add fs/9p/9p.ko
+add net/9p/9pnet_virtio.ko
+
+moddir=/lib/modules/$(uname -r)/kernel
+for mod in $modules; do
+    mkdir -p tmp/$(dirname $mod)
+    if [ -f $moddir/$mod.xz ]; then
+	xzcat $moddir/$mod.xz > tmp/$mod
+    elif [ -f $moddir/$mod ]; then
+	cat $moddir/$mod > tmp/$mod
+    else
+	echo "Cannot find module $mod"; exit 1
+    fi
+    echo $mod >> tmp/modules
+done
+mkdir tmp/newroot
+mkdir tmp/oldroot
+(cd tmp && find | cpio -H newc -o) | xz --check=crc32 --lzma2 > virtramfs.xz
+
+

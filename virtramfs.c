@@ -47,6 +47,8 @@ int main(int ac, char** av) {
     chdir("/");
     domount("proc", "/proc", "proc", 0, "");
     domount("sys", "/sys", "sysfs", 0, "");
+    domount("hugetlbfs", "/dev/hugepages", "hugetlbfs", 0, "");
+    domount("tmpfs", "/var/run", "tmpfs", 0, "");
     execve("/bin/bash", NULL, NULL);
     return 0;
 }

@@ -39,7 +39,7 @@ int main(int ac, char** av) {
         }
         close(fd);
     }
-    domount("root", "/newroot", "9p", 0, "trans=virtio,version=9p2000.L,cache=loose,debug=0xffff");
+    domount("root", "/newroot", "9p", 0, "trans=virtio,version=9p2000.L,cache=none");
     domount("tmpfs", "/newroot/tmp", "tmpfs", 0, "");
     chdir("/newroot");
     domount(".", "/", "none", MS_MOVE, "");

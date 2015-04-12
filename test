@@ -9,7 +9,7 @@ qemu-system-x86_64 \
    -kernel /boot/vmlinuz-$(uname -r) \
    -initrd virtramfs.xz \
    -append 'console=ttyS0 debug hugepages=400' \
-   -virtfs local,path=/,security_model=none,readonly,mount_tag=root \
+   -virtfs local,path=/,security_model=none,mount_tag=root \
    -cpu host
 
 

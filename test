@@ -1,0 +1,15 @@
+#!/bin/bash
+
+qemu-system-x86_64 \
+   -enable-kvm \
+   -m 1G \
+   -smp 2 \
+   -vga none \
+   -nographic \
+   -kernel /boot/vmlinuz-$(uname -r) \
+   -initrd virtramfs.xz \
+   -append 'console=ttyS0 debug' \
+   -virtfs local,path=/,security_model=none,readonly,mount_tag=root \
+   -cpu host
+
+

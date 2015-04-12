@@ -10,6 +10,8 @@ qemu-system-x86_64 \
    -initrd virtramfs.xz \
    -append 'console=ttyS0 debug hugepages=400' \
    -virtfs local,path=/,security_model=none,mount_tag=root \
+   -netdev bridge,id=tap0,br=virbr0 \
+   -device virtio-net-pci,netdev=tap0,id=nic0 \
    -cpu host
 
 
